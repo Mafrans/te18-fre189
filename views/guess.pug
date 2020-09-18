@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  .container.my-5
+    .input-group.input-group-lg
+      .input-group-prepend
+        span#inputGroup-sizing-lg.input-group-text Guess
+      input.form-control#guess(type='text', aria-label='Guess', aria-describedby='inputGroup-sizing-lg')
+
+
+    .alert.mt-5.alert-success(role='alert')#correct
+    .alert.mt-5.alert-danger(role='alert')#incorrect
+
+
+  script(src="/javascripts/gissa.js")
