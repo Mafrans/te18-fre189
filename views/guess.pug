@@ -5,11 +5,8 @@ block content
     .input-group.input-group-lg
       .input-group-prepend
         span#inputGroup-sizing-lg.input-group-text Guess
-      input.form-control#guess(type='text', aria-label='Guess', aria-describedby='inputGroup-sizing-lg')
+      input.form-control(type='text', name="guess", aria-label='Guess', aria-describedby='inputGroup-sizing-lg')
 
-
-    .alert.mt-5.alert-success(role='alert')#correct
-    .alert.mt-5.alert-danger(role='alert')#incorrect
-
+    .alert.d-none.mt-5(role='alert')
 
   script(src="/javascripts/gissa.js")

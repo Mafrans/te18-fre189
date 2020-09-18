@@ -1,43 +1,36 @@
-function getRandomIntInclusive(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive 
+const input = document.querySelector('input[name="guess"]');
+const target = rand(1, 10);
+let guesses = 0;
+
+console.log({target});
+input.addEventListener('keyup', e => {
+    if(e.key === 'Enter') {
+        try {
+            const guess = parseInt(input.value);
+            if(isNaN(guess)) throw Error(`'${input.value}' is not a number`);
+            guesses++;
+
+            if(guess === target) {
+                showAlert('success', `🎉 Du gissade rätt, snyggt jobbat! (${guesses} försök)`);
+            }
+            else {
+                showAlert('danger', `❌ Din gissning (${guess}) är för ${guess > target ? 'stor' : 'liten'}, försök igen! (${guesses} försök)`);
+            }
+        }
+        catch(e) {
+            showAlert('danger', `😨 Uh oh, Något gick fel! ${e.name}: ${e.message}`);
+        }
+    }
+})
+
+const alertBox = document.querySelector('.alert');
+function showAlert(type, message) {
+    alertBox.classList.remove(...['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark'].map(e => 'alert-'+e));
+    alertBox.classList.add('alert-' + type);
+    alertBox.classList.remove('d-none');
+    alertBox.textContent = message;
 }
 
-let num = getRandomIntInclusive(1, 10);
-
-let guess = 0;
-
-let guessCount = 0;
-
-const input = document.querySelector('#guess');
-const correct = document.querySelector('#correct');
-const incorrect = document.querySelector('#incorrect');
-
-correct.classList.toggle('d-none');
-incorrect.classList.toggle('d-none');
-
-input.addEventListener('keydown', function (event) {
-  if (event.key === "Enter") {
-    guessCount++;
-    if (parseInt(input.value) === num) {
-      correct.textContent = 'Grattis, du gissade rätt (' + guessCount + ' försök)';
-      correct.classList.toggle('d-none');
-    } else {
-      if (parseInt(input.value) > num) {
-        incorrect.textContent = 'Fel, din gissning ' + guess + ' är för stor, försök igen.';
-      } else if (parseInt(input.value) < num) {
-        incorrect.textContent = 'Fel, din gissning ' + guess + ' är för liten, försök igen.';
-      }
-      incorrect.classList.toggle('d-none');
-    }
-
-    input.value = "";
-  }
-} )
-
-
-// while (guess != num) {
-//   // guess = prompt('Gissa ett tal mellan 1 och 10');
-//   // console.log(guess);
-// }
+function rand(min, max) {
+    return Math.floor(Math.random()*(max-min+1))+min;
+}
